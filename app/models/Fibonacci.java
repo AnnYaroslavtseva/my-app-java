@@ -4,10 +4,10 @@ public class Fibonacci {
 
 
         private int parameterN;
-        private int[] fibonacciSequence;
-        private StringBuffer sequence = computation(parameterN);
+       // private int[] fibonacciSequence;
+       private StringBuffer sequence;
 
-        public StringBuffer computation  (int parameterN) {
+        private StringBuffer computation  (int parameterN) {
             int a = 1;
             int b = 1;
             int n;
@@ -27,13 +27,10 @@ public class Fibonacci {
 
         }
 
-
-
-
-        public Fibonacci(int parameterN) {
-
-                this.parameterN = parameterN;
-        }
+    public Fibonacci(int parameterN) {
+        this.parameterN = parameterN;
+        this.sequence = computation(parameterN);
+    }
 
     public int getParameterN() {
         return parameterN;
@@ -43,13 +40,15 @@ public class Fibonacci {
         this.parameterN = parameterN;
     }
 
+/*
     public int[] getFibonacciSequence() {
         return fibonacciSequence;
     }
+*/
 
-    public void setFibonacciSequence(int[] fibonacciSequence) {
+    /*public void setFibonacciSequence(int[] fibonacciSequence) {
         this.fibonacciSequence = fibonacciSequence;
-    }
+    }*/
 
     public StringBuffer getSequence() {
         return sequence;

@@ -28,16 +28,38 @@ public class ApplicationLiveTest{
     private static final String BASE_URL = "http://localhost:9000";
 
 
-    
+/*
     @Test
     public void whenCreatesRecord_thenCorrect() {
         Fibonacci fibonacci = new Fibonacci(5);
-        JSONObject obj = new JSONObject(makeRequest(BASE_URL, "POST", new JSONObject(fibonacci)));
-        assertTrue(obj.getBoolean("isSuccessfull"));
+        JSONArray obj = new JSONArray(makeRequest(BASE_URL, "POST",  new JSONObject(fibonacci) ));
+        assertTrue(obj.getBoolean(0*//*"isSuccessfull"*//*));// assertTrue проверяет, является ли результат выражения верным.
+        JSONArray body = obj.getJSONArray(1*//*"body"*//*);
+        assertEquals(fibonacci.getParameterN(), body.getInt(2*//*"parameter"*//*));
+        assertEquals(fibonacci.getSequence(), body.getString(3*//*"Sequence"*//*));
+    }*/
+
+    @Test
+    public void whenCreatesRecord_thenCorrect() {
+        Fibonacci fibonacci = new Fibonacci(5);
+        JSONObject obj = new JSONObject(makeRequest(BASE_URL, "POST",  new JSONObject(fibonacci) ));
+        assertTrue(obj.getBoolean("isSuccessfull"));// assertTrue проверяет, является ли результат выражения верным.
         JSONObject body = obj.getJSONObject("body");
         assertEquals(fibonacci.getParameterN(), body.getInt("parameter"));
-        assertEquals(fibonacci.getSequence(), body.getString("Sequence"));
+        assertEquals(fibonacci.getSequence().toString(), body.getString("Sequence"));
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Test
     public void whenDeletesCreatedRecord_thenCorrect() {
@@ -93,7 +115,7 @@ public class ApplicationLiveTest{
     //С помощью вышеуказанного теста мы выясняем
     // правильное функционирование действия контроллера listSequences .
 
-    public static String makeRequest(String myUrl, String httpMethod, JSONObject parameters) {
+    private static String makeRequest(String myUrl, String httpMethod, JSONObject  parameters) {
 
         URL url = null;
         try {
@@ -110,7 +132,7 @@ public class ApplicationLiveTest{
         }
         conn.setDoInput(true);
 
-        conn.setReadTimeout(10000);
+        conn.setReadTimeout(300000); //не более чем 5 мин
 
         conn.setRequestProperty("Content-Type", "application/json");
         DataOutputStream dos = null;
@@ -143,7 +165,7 @@ public class ApplicationLiveTest{
         return inputString;
     }
 
-    public static String inputStreamToString(InputStream is) {
+    private static String inputStreamToString(InputStream is) {
         BufferedReader br = null;
         StringBuilder sb = new StringBuilder();
 
